@@ -14,25 +14,16 @@ export const Rating = ({ value, maxRating = 5 }) => {
 
   return (
     <>
-      {[...Array(maxRating)].map((_, index) =>
-        index < value ? (
-          <Image
+      {[...Array(maxRating)].map((_, index) => {
+        const src = index < value ? 'star-gold' : 'star';
+        return <Image
             key={index}
-            src="/images/star-gold.png"
+            src={`/images/${src}.png`}
             width={18}
             height={18}
-            alt="gold star"
+            alt={src}
           />
-        ) : (
-          <Image
-            key={index}
-            src="/images/star.png"
-            width={18}
-            height={18}
-            alt="gray star"
-          />
-        )
-      )}
+      })}
     </>
   );
 };
