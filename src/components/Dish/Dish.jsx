@@ -6,7 +6,7 @@ import ThumbDown from "./images/thumb-down.svg";
 import styles from "./styles.module.scss";
 
 export const Dish = ({ dish }) => {
-  const [activeDishCount, setActiveDishCount] = useState(0);
+  const [dishCount, setDishCount] = useState(0);
 
   if (!dish) {
     return null;
@@ -15,11 +15,11 @@ export const Dish = ({ dish }) => {
   const { name, ingredients } = dish;
 
   const increaseCount = () => {
-    setActiveDishCount(activeDishCount >= 5 ? 5 : activeDishCount + 1)
+    setDishCount(dishCount >= 5 ? 5 : dishCount + 1)
   }
 
   const decreaseCount = () => {
-    setActiveDishCount(activeDishCount <= 0 ? 0 : activeDishCount - 1)
+    setDishCount(dishCount <= 0 ? 0 : dishCount - 1)
   }
 
 
@@ -29,7 +29,7 @@ export const Dish = ({ dish }) => {
       <Button className={styles.decrementAction} onClick={decreaseCount} type="secondary">
         -
       </Button>
-      {activeDishCount}
+      {dishCount}
       <Button className={styles.incrementAction} onClick={increaseCount} type="primary">
         +
       </Button>
