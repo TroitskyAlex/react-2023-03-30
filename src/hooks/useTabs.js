@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 
 /**
  * __Use only for client-side components!__
@@ -6,16 +6,18 @@ import { useEffect, useState } from "react";
  * @returns `activeTabId` returns active tab ID
  * @returns `setActiveTabWithCache()` activeTabId setter. Also saves activeTabId to localStorage
  */
-export const useTabs = (tabName = "activeTab", initialTabIndex = 0) => {
+export const useTabs = ({tabName, initialTabIndex = 0}) => {
   const [activeTabId, setActiveTab] = useState(initialTabIndex);
   const [isTabsReady, setTabsReady] = useState(false);
 
-  const setActiveTabWithCache = (tabIndex) => {
+  const setActiveTabWithCache = useCallback((tabIndex) => {
     setActiveTab(tabIndex);
-    window?.localStorage?.setItem?.(tabName, tabIndex);
-  };
+    if (tabName && tabName?.length > 0) {
+      window?.localStorage?.setItem?.(tabName, tabIndex);
+    }
+  }, [tabName]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const savedActiveTabIndex = localStorage?.getItem?.(tabName);
 
     if (savedActiveTabIndex) {
@@ -23,7 +25,7 @@ export const useTabs = (tabName = "activeTab", initialTabIndex = 0) => {
     }
 
     setTabsReady(true);
-  }, [tabName]);
+  }, []);
 
   return { isTabsReady, activeTabId, setActiveTabWithCache };
 };

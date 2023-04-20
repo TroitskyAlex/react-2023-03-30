@@ -6,20 +6,18 @@ import { useTabs } from "@/hooks/useTabs";
 
 export const Home = () => {
   const { isTabsReady, activeTabId, setActiveTabWithCache } =
-    useTabs("activeRestaurantID");
+    useTabs({tabName: "activeRestaurantID" });
 
   const activeRestaurant = restaurants[activeTabId];
 
   return (
     <div>
       <Header />
-      {isTabsReady && (
-        <Tabs
-          restaurants={restaurants}
-          activeIndex={activeTabId}
-          onTabClick={setActiveTabWithCache}
-        />
-      )}
+      <Tabs
+        restaurants={restaurants}
+        activeIndex={activeTabId}
+        onTabClick={setActiveTabWithCache}
+      />
       {isTabsReady && activeRestaurant && (
         <Restaurant key={activeRestaurant.id} restaurant={activeRestaurant} />
       )}
